@@ -15,7 +15,7 @@
 -------------------->> Luraph & Luarmor Macros <<--------------------
 
 if not LPH_OBFUSCATED then
-	script_key                  = "1"
+	script_key                  = "mCmIgbiDYBXSQGtBwuMqIdvjOofcXUbW"
 	LRM_UserNote                = "Not specified"
 	LRM_ScriptName              = "Auto Crate"
 	LRM_SecondsLeft             = math.huge
@@ -1935,12 +1935,12 @@ end
 
 -- maybe i dont call getpistol at all?
 -- im onto something
---[[local RetrievedGuns = false
+local RetrievedGuns = false
 if not FinishedRendering then
 	for i,v in pairs(workspace:GetDescendants()) do
         	if v:IsA("ClickDetector") then
 			local ParentName = tostring(v.Parent)
-			if ParentName == "Criminal" or ParentName == "Station" then
+			if ParentName == "Criminal" then
 				if Backpack:FindFirstChild(SelectedGun) then
 					RetrievedGuns = true
 					break 
@@ -1951,7 +1951,7 @@ if not FinishedRendering then
    			end
 		end
 	end
-end]]
+end
 
 --warn("pass 5")
 
@@ -2131,19 +2131,10 @@ RobberyData.Mansion.Callback = function()
 	BodyVelocity:Destroy()
 	EquipGun(false)
 
-	local BrokenReward = true -- ping fucks you up man
 	SetStatus("Waiting for reward..")
-
-	task.delay(10, function()
-		if BrokenReward then
-			ServerSwitch()
-    		end
-	end)
-
 	repeat task.wait() until PlayerGui.AppUI:FindFirstChild("RewardSpinner")
 
 	if PlayerGui.AppUI:FindFirstChild("RewardSpinner") then
-		BrokenReward = false
 		repeat task.wait() until not PlayerGui.AppUI:FindFirstChild("RewardSpinner")
 	end
 
@@ -2497,33 +2488,8 @@ task.spawn(function()
 	end
 end)
 
-local RetrievedGuns = false
-if Settings.IncludeMansion and Backpack:FindFirstChild(SelectedGun) then
-	SetStatus("Waiting for guns..")
-
-	--if not FinishedRendering then
-		for i,v in pairs(workspace:GetDescendants()) do
-        		if v:IsA("ClickDetector") then
-				local ParentName = tostring(v.Parent)
-				if ParentName == "Criminal" or ParentName == "Station" then
-					if Backpack:FindFirstChild(SelectedGun) then
-						RetrievedGuns = true
-						break 
-					end
-
-           				fireclickdetector(v)
-					--task.wait(0.7)
-   				end
-			end
-		end
-	--end
-
-	if Backpack:FindFirstChild(SelectedGun) then
-		RetrievedGuns = true
-	end
-
-	repeat task.wait() until Backpack:FindFirstChild(SelectedGun) or RetrievedGuns
-end
+SetStatus("Waiting for guns..")
+repeat task.wait() until Backpack:FindFirstChild(SelectedGun)
 
 if Settings.IncludeAirdrops and not Workspace:FindFirstChild("Drop") then
 	LoadMap()
